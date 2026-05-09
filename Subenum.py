@@ -22,8 +22,19 @@ BANNER = """
 def resolve_subdomain(subdomain, timeout=3):
     try:
         socket.setdefaulttimeout(timeout)
-        ip = socket.gethostbyname(subdomain)
-        return subdomain, ip
+
+        # Supports both IPv4 and IPv6
+        results = socket.getaddrinfo(
+            subdomain,
+            None,
+            family=socket.AF_UNSPEC,
+            type=socket.SOCK_STREAM
+        )
+
+        ips = sorted({result[4][0] for result in results})
+
+        return subdomain, ips
+
     except (socket.gaierror, socket.timeout):
         return subdomain, None
 
