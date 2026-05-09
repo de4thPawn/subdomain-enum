@@ -18,6 +18,7 @@ BANNER = """
                               v1.3.2
 """
 
+DOMAIN = "d4thpwn.com"
 
 def resolve_subdomain(subdomain, timeout=3):
     try:
@@ -63,7 +64,7 @@ def run_enum(domain, wordlist_path, threads=20, timeout=3, verbose=False):
         print("[!] WARNING: Wildcard DNS detected. Results may contain false positives.")
         print("-" * 50)
     
-    subdomains = [f"{word}.{domain}" for word in words]
+    subdomains = [f"{word}.{DOMAIN}" for word in words]
     
     with ThreadPoolExecutor(max_workers=threads) as executor:
         futures = {
